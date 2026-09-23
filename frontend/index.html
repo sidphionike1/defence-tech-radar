@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LO-Target Radar — Sensor Fusion + ML</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-report" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="16" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
+        <path d="M16 16 26 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="21" cy="19" r="2.2" fill="currentColor"/>
+      </svg>
+      <div>
+        <h1>LO-Target Radar</h1>
+        <p>Low-observable detection · sensor fusion + ML</p>
+      </div>
+    </div>
+
+    <dl class="stats" aria-live="polite">
+      <div><dt>Conventional</dt><dd id="stat-baseline">—</dd></div>
+      <div><dt>Fusion + ML</dt><dd id="stat-fused">—</dd></div>
+      <div class="stat-recovered"><dt>Recovered</dt><dd id="stat-recovered">—</dd></div>
+    </dl>
+
+    <div class="link">
+      <span class="pill" id="source-pill">—</span>
+      <span class="sync" id="sync">SYNC --:--:--</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="scope" aria-labelledby="h-baseline">
+      <header class="scope-head">
+        <h2 id="h-baseline">Conventional Threshold</h2>
+        <p>Single sensor · SNR &gt; 10 dB</p>
+      </header>
+      <div class="scope-frame">
+        <canvas id="scope-baseline" role="img"
+          aria-label="Conventional threshold radar scope. Use the contact list to inspect targets by keyboard."></canvas>
+      </div>
+    </section>
+
+    <section class="scope scope--fused" aria-labelledby="h-fused">
+      <header class="scope-head">
+        <h2 id="h-fused">Fusion + ML</h2>
+        <p>3-sensor fusion · classifier · anomaly model</p>
+      </header>
+      <div class="scope-frame">
+        <canvas id="scope-fused" role="img"
+          aria-label="Fusion plus ML radar scope. Use the contact list to inspect targets by keyboard."></canvas>
+      </div>
+    </section>
+
+    <aside class="inspector" id="inspector" aria-label="Contact inspector"></aside>
+
+    <footer class="legend" aria-label="Legend">
+      <span class="legend-title">Fusion + ML class</span>
+      <ul id="legend-classes"></ul>
+      <span class="legend-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#eafff4" stroke-width="2" stroke-dasharray="3 3"/></svg>
+        Recovered — missed by conventional
+      </span>
+      <span class="legend-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#43ff9a"/></svg>
+        Conventional return (unclassified)
+      </span>
+    </footer>
+  </main>
+
+  <script src="mock-api.js"></script>
+  <script src="api.js"></script>
+  <script src="radar.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
