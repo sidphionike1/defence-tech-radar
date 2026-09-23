@@ -7,7 +7,11 @@ import os
 
 MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 150
-TIMEOUT_S = 10.0
+# BRD §7 / Design Doc §9: explain must respond in < ~3s. Hard-cap the API
+# attempt at 4s with no retries — a hung call shows the fallback quickly
+# instead of stalling the live demo.
+TIMEOUT_S = 4.0
+MAX_RETRIES = 0
 
 FALLBACK_REPORT = (
     "Low-RCS contact near the primary sensor noise floor, confirmed via fused "
@@ -31,7 +35,7 @@ def _get_client():
     if _client is None:
         from anthropic import Anthropic
         # Key comes from ANTHROPIC_API_KEY env var — never hardcoded.
-        _client = Anthropic(timeout=TIMEOUT_S)
+        _client = Anthropic(timeout=TIMEOUT_S, max_retries=MAX_RETRIES)
     return _client
 
 

@@ -15,6 +15,8 @@ Until integration (~minute 35), develop against a hardcoded mock JSON matching t
 
 Mock must include at least one target with `fused_detected: true, baseline_detected: false, snr_db < 10` (the hero stealth target) so the key visual moment is buildable before the backend exists.
 
+**Use `mock_detections.json` in this folder** — it is real captured output from the seeded backend (`{"baseline": [...], "fused": [...]}`), so it is byte-identical to what integration will serve. Hero stealth targets in it: ids 41–46 (missed by baseline, caught by fusion).
+
 ## API contract (LOCKED — matches backend/CLAUDE.md; never invent or rename fields)
 
 ### `GET /api/detections/baseline`
